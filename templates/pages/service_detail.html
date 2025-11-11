@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ service_name }} - Услуги{% endblock %}
+
+{% block content %}
+<h1>{{ service_name }}</h1>
+
+<p>
+    Это страница конкретной услуги. Обратите внимание на меню:
+</p>
+
+<div class="info-box">
+    <h3>Логика раскрытия меню</h3>
+    <p>
+        Когда вы находитесь на этой странице:
+    </p>
+    <ul style="margin-left: 20px; margin-top: 10px;">
+        <li>✅ Корневой уровень меню - развернут (всегда)</li>
+        <li>✅ Пункт "Услуги" - развернут (родитель активного элемента)</li>
+        <li>✅ Текущая услуга - выделена как активная</li>
+        <li>✅ Если у текущей услуги есть подпункты - они развернуты</li>
+        <li>❌ Другие ветки меню - свернуты</li>
+    </ul>
+</div>
+
+<h2>Как это реализовано</h2>
+<p>
+    <strong>Функция get_active_path():</strong> Строит путь от корня до активного элемента,
+    проходя по цепочке parent. Все элементы в этом пути получают флаг <code>is_in_path</code>.
+</p>
+
+<p>
+    <strong>Функция render_menu_level():</strong> При рекурсивной отрисовке проверяет:
+</p>
+<ul style="margin-left: 20px;">
+    <li>Если <code>level == 0</code> - показывать (корневой уровень)</li>
+    <li>Если <code>is_in_path</code> - показывать (путь к активному)</li>
+    <li>Если <code>is_child_of_active</code> - показывать (первый уровень под активным)</li>
+    <li>Иначе - скрывать через <code>display:none</code></li>
+</ul>
+
+<p style="margin-top: 20px;">
+    <a href="/services/" style="color: #3498db; text-decoration: none;">
+        ← Вернуться к списку услуг
+    </a>
+</p>
+{% endblock %}
